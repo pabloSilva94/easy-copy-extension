@@ -1,0 +1,71 @@
+body {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    gap: 10px;
+
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    width: 250px;
+    padding: 5px;
+    border-radius: 5%;
+    gap: 10px
+}
+
+#copyFieldsForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #f1f1f1;
+    width: 250px;
+    height: 210px;
+    padding: 5px;
+    border-radius: 5%;
+    gap: 10px
+}
+
+#copyFieldsForm>h3 {
+    font-size: 1em;
+}
+
+.imgClip {
+    width: 14px;
+    height: 14px;
+}
+
+input {
+    font-size: 12px !important;
+}
+
+#copyCNPJ,
+#copyEmail,
+#copyNome {
+    border: 1px solid #cccc;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#compareInputs {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    background: #f1f1f1;
+    width: 250px;
+    height: 220px;
+    padding: 5px;
+    border-radius: 5%;
+}
+
+#compareInputs>h4 {
+    font-size: 1em;
+}
+
+#inputCompareResult {
+    border: none;
+    background: none;
+}
