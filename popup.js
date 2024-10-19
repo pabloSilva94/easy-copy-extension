@@ -1,40 +1,3 @@
-document.getElementById("copiar").addEventListener("click", () => {
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    chrome.scripting.executeScript(
-      {
-        target: { tabId: tabs[0].id },
-        function: copiarDadosNaPagina,
-      },
-      (results) => {
-        if (results && results[0]) {
-          setInfos(results[0]);
-        }
-      }
-    );
-  });
-});
-function copiarDadosNaPagina() {
-  const emailInput = document.querySelector('input[title="E-Mail"]');
-  const nomeInput = document.querySelector('input[title="Nome"]');
-  const cnpjInput = document.querySelector('input[title="CNPJ"]');
-
-  if (!emailInput || !nomeInput || !cnpjInput) {
-    alert("Um ou mais campos não foram encontrados.");
-    return;
-  }
-
-  const email = emailInput.value || "Email não encontrado";
-  const nome = nomeInput.value || "Nome não encontrado";
-  const cnpj = cnpjInput.value || "CNPJ não encontrado";
-
-  return { email, nome, cnpj };
-}
-function setInfos(results) {
-  document.getElementById("inputNome").value = results.result.nome;
-  document.getElementById("inputEmail").value = results.result.email;
-  document.getElementById("inputCNPJ").value = results.result.cnpj;
-}
-
 function copyToClipboard(text) {
   const input = document.createElement("input");
   input.value = text;
@@ -48,7 +11,21 @@ function copyToClipboard(text) {
     document.body.removeChild(input);
   }
 }
-
+function copyToAllClipboard(allText) {
+  const textToCopy = JSON.stringify(allText, null, 2);
+  const input = document.createElement("input");
+  input.value = textToCopy;
+  document.body.appendChild(input);
+  input.select();
+  try {
+    document.execCommand("copy");
+  } catch (err) {
+    console.error("Erro ao copiar: ", err);
+  } finally {
+    document.body.removeChild(input);
+  }
+}
+// copiar campos separados
 document.getElementById("copyNome").addEventListener("click", () => {
   const nome = document.getElementById("inputNome").value;
   copyToClipboard(nome);
@@ -62,6 +39,36 @@ document.getElementById("copyEmail").addEventListener("click", () => {
 document.getElementById("copyCNPJ").addEventListener("click", () => {
   const cnpj = document.getElementById("inputCNPJ").value;
   copyToClipboard(cnpj);
+});
+document.getElementById("copyNS").addEventListener("click", () => {
+  const NS = document.getElementById("inputNS").value;
+  copyToClipboard(NS);
+});
+document.getElementById("copyPass").addEventListener("click", () => {
+  const pass = document.getElementById("inputPass").value;
+  copyToClipboard(pass);
+});
+document.getElementById("copyPhone").addEventListener("click", () => {
+  const phone = document.getElementById("inputPhone").value;
+  copyToClipboard(phone);
+});
+// copiar os elementos juntos
+document.getElementById("all").addEventListener("click", () => {
+  const nome = document.getElementById("inputNome").value;
+  const email = document.getElementById("inputEmail").value;
+  const cnpj = document.getElementById("inputCNPJ").value;
+  const NS = document.getElementById("inputNS").value;
+  const pass = document.getElementById("inputPass").value;
+  const phone = document.getElementById("inputPhone").value;
+  const allText = {
+    nome,
+    email,
+    cnpj,
+    phone,
+    NS,
+    pass,
+  };
+  copyToAllClipboard(allText);
 });
 //exibir campos ou ocultar campos
 document.getElementById("copyFields").addEventListener("click", () => {
